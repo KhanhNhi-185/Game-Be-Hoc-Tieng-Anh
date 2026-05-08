@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🌟 Bé Học Từ Vựng Qua Emoji</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;700&family=Bubblegum+Sans&display=swap"
+        rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Quicksand', sans-serif;
+            background: #a2d2ff;
+            background-image:
+                radial-gradient(#ffffff 10%, transparent 10%),
+                radial-gradient(#ffffff 10%, transparent 10%);
+            background-size: 50px 50px;
+            background-position: 0 0, 25px 25px;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            overflow-x: hidden;
+        }
+
+        .game-container {
+            background: white;
+            width: 100%;
+            max-width: 750px;
+            padding: 40px;
+            border-radius: 50px;
+            text-align: center;
+            border: 8px solid #ffafbd;
+            box-shadow: 0 15px 0 #fb6f92;
+            position: relative;
+            animation: bounceIn 0.8s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+        }
+
+        @keyframes bounceIn {
+            0% { transform: scale(0.5); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        h1 img {
+            max-width: 100%;
+            height: auto;
+            max-height: 150px;
+            object-fit: contain;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            color: #4361ee;
+            margin-bottom: 20px;
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .emoji-display {
+            font-size: 130px;
+            margin: 10px 0;
+            display: inline-block;
+            filter: drop-shadow(0 8px 0 #eeeeee);
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0); }
+            50% { transform: translateY(-15px) rotate(5deg); }
+        }
+
+        .word-info {
+            background: #f0f7ff;
+            padding: 25px;
+            border-radius: 35px;
+            border: 4px dashed #4cc9f0;
+            margin-bottom: 25px;
+            text-align: left;
+        }
+
+        .info-row {
+            margin: 8px 0;
+            font-size: 20px;
+            font-weight: 700;
+        }
+
+        .info-label { color: #7209b7; margin-right: 10px; }
+        .pronunciation { color: #f72585; font-family: 'Arial', sans-serif; }
+        .meaning { color: #4361ee; }
+
+        #example {
+            color: #555;
+            font-style: italic;
+            font-weight: 500;
+            font-size: 18px;
+        }
+
+        .buttons-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin: 25px 0;
+        }
+
+        .btn {
+            padding: 18px;
+            border: none;
+            border-radius: 25px;
+            background: #4cc9f0;
+            color: white;
+            font-size: 24px;
+            font-weight: 800;
+            font-family: 'Bubblegum Sans', cursive;
+            cursor: pointer;
+            box-shadow: 0 8px 0 #4361ee;
+            transition: 0.1s;
+        }
+
+        .btn:hover { background: #4895ef; }
+        .btn:active { transform: translateY(4px); box-shadow: 0 4px 0 #4361ee; }
+
+        .message {
+            font-size: 30px;
+            height: 40px;
+            color: #ff477e;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .score {
+            font-size: 26px;
+            color: #f39c12;
+            font-weight: 900;
+            background: #fff3e0;
+            display: inline-block;
+            padding: 5px 20px;
+            border-radius: 20px;
+        }
+
+        .progress-container {
+            width: 100%;
+            height: 20px;
+            background: #eee;
+            border-radius: 50px;
+            margin: 25px 0;
+            border: 3px solid #ddd;
+        }
+
+        .progressBar {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, #ff477e, #4cc9f0);
+            border-radius: 50px;
+            transition: 0.5s;
+        }
+
+        .control-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .control-btn {
+            border: none;
+            padding: 12px 20px;
+            border-radius: 50px;
+            color: white;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            box-shadow: 0 5px 0 rgba(0, 0, 0, 0.2);
+            transition: 0.2s;
+        }
+
+        .control-btn:active { transform: translateY(3px); box-shadow: none; }
+
+        .speak-btn { background: #7209b7; }
+        .next-btn { background: #4caf50; font-size: 18px; padding: 12px 30px; }
+        .restart-btn { background: #ff9f43; }
+        .music-btn { background: #5f27cd; }
+        .home-btn { background: #341f97; }
+
+        .correct { background: #4caf50 !important; box-shadow: 0 8px 0 #2e7d32 !important; animation: bounceCorrect 0.5s; }
+        .wrong { background: #ff4d4d !important; box-shadow: 0 8px 0 #c62828 !important; animation: shake 0.5s; }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-10px); }
+            75% { transform: translateX(10px); }
+        }
+
+        @keyframes bounceCorrect {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        @media(max-width: 600px) {
+            .buttons-container { grid-template-columns: 1fr; }
+            .emoji-display { font-size: 90px; }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="game-container">
+        <h1><img src="đuổi hình bắt chữ.png" alt="Đuổi hình bắt chữ" onerror="this.style.display='none'"></h1>
+        <p class="subtitle">Bé hãy chọn đúng tên của hình nhé!</p>
+
+        <div id="emoji" class="emoji-display">🍎</div>
+
+        <div class="word-info">
+            <div class="info-row">
+                <span class="info-label">Tên:</span>
+                <span id="word">???</span>
+            </div>
+            <div class="info-row">
+                <span class="info-label">Đọc là:</span>
+                <span id="pronunciation" class="pronunciation">???</span>
+            </div>
+            <div class="info-row">
+                <span class="info-label">Nghĩa là:</span>
+                <span id="meaning" class="meaning">???</span>
+            </div>
+            <div class="info-row">
+                <span id="example">Bé cố lên nhé! 💪</span>
+            </div>
+        </div>
+
+        <div id="buttons" class="buttons-container"></div>
+        <div id="message" class="message"></div>
+        <div id="score" class="score">⭐ Điểm: 0</div>
+
+        <div class="progress-container">
+            <div id="progressBar" class="progressBar"></div>
+        </div>
+
+        <div class="control-buttons">
+            <button class="control-btn speak-btn" onclick="speakWord()">🔊 Nghe đọc</button>
+            <button class="control-btn next-btn" onclick="nextQuestion()">➡️ Câu tiếp</button>
+            <button class="control-btn restart-btn" onclick="restartGame()">🔄 Chơi lại</button>
+            <button class="control-btn music-btn" id="musicBtn" onclick="toggleMusic()">🔇 Bật nhạc</button>
+            <button class="control-btn home-btn" onclick="goHome()">🏠 Trang chủ</button>
+        </div>
+    </div>
+
+    <!-- Âm thanh -->
+    <audio id="bgMusic" loop>
+        <source src="audio/nhac1.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="correctSound">
+        <source src="audio/duolingo-correct.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="wrongSound">
+        <source src="audio/duolingo-wrong.mp3" type="audio/mpeg">
+    </audio>
+
+    <script>
+        const words = [
+            { emoji: "🍎", correct: "Apple", pronunciation: "/ˈæp.əl/", meaning: "Quả táo", example: "I eat an <b>apple</b> every day.", options: ["Apple", "Orange", "Banana", "Grape"] },
+            { emoji: "🐶", correct: "Dog", pronunciation: "/dɒɡ/", meaning: "Con chó", example: "The dog is very cute.", options: ["Cat", "Dog", "Bird", "Fish"] },
+            { emoji: "📚", correct: "Book", pronunciation: "/bʊk/", meaning: "Quyển sách", example: "This book is interesting.", options: ["Pen", "Book", "Table", "Chair"] },
+            { emoji: "🚗", correct: "Car", pronunciation: "/kɑːr/", meaning: "Xe hơi", example: "My father drives a car.", options: ["Bus", "Car", "Bike", "Train"] },
+            { emoji: "☀️", correct: "Sun", pronunciation: "/sʌn/", meaning: "Mặt trời", example: "The sun is bright today.", options: ["Moon", "Sun", "Star", "Cloud"] },
+            { emoji: "🐱", correct: "Cat", pronunciation: "/kæt/", meaning: "Con mèo", example: "The cat is sleeping.", options: ["Dog", "Cat", "Lion", "Tiger"] },
+            { emoji: "🐘", correct: "Elephant", pronunciation: "/ˈel.ɪ.fənt/", meaning: "Con voi", example: "The elephant is very big.", options: ["Elephant", "Cow", "Pig", "Mouse"] },
+            { emoji: "🍦", correct: "Ice cream", pronunciation: "/ˌaɪs ˈkriːm/", meaning: "Kem", example: "I love cold ice cream.", options: ["Candy", "Ice cream", "Cake", "Milk"] },
+            { emoji: "🦁", correct: "Lion", pronunciation: "/ˈlaɪ.ən/", meaning: "Sư tử", example: "The lion is the king.", options: ["Tiger", "Lion", "Bear", "Wolf"] },
+            { emoji: "🍌", correct: "Banana", pronunciation: "/bəˈnɑː.nə/", meaning: "Quả chuối", example: "Monkey likes bananas.", options: ["Apple", "Banana", "Mango", "Peach"] }
+        ];
+
+        let current = 0;
+        let score = 0;
+        let shuffledWords = [];
+        let answered = false;
+        let isMusicPlaying = false;
+
+        const music = document.getElementById("bgMusic");
+        const musicBtn = document.getElementById("musicBtn");
+        const correctAudio = document.getElementById("correctSound");
+        const wrongAudio = document.getElementById("wrongSound");
+
+        function toggleMusic() {
+            if (isMusicPlaying) {
+                music.pause();
+                isMusicPlaying = false;
+                musicBtn.innerText = "🔇 Bật nhạc";
+                musicBtn.style.background = "#8395a7";
+            } else {
+                music.play().then(() => {
+                    isMusicPlaying = true;
+                    musicBtn.innerText = "🔊 Tắt nhạc";
+                    musicBtn.style.background = "#5f27cd";
+                }).catch(e => console.log("Yêu cầu tương tác trước khi phát nhạc"));
+            }
+        }
+
+        function shuffleArray(array) {
+            return array.sort(() => Math.random() - 0.5);
+        }
+
+        function initGame() {
+            shuffledWords = shuffleArray([...words]);
+            current = 0;
+            score = 0;
+            loadGame();
+        }
+
+        function loadGame() {
+            answered = false;
+            let word = shuffledWords[current];
+            document.getElementById("emoji").innerHTML = word.emoji;
+            document.getElementById("word").innerHTML = "???";
+            document.getElementById("pronunciation").innerHTML = "???";
+            document.getElementById("meaning").innerHTML = "???";
+            document.getElementById("example").innerHTML = "Bé chọn đáp án đúng nhé!";
+            document.getElementById("message").innerHTML = "";
+            document.getElementById("score").innerHTML = "⭐ Điểm: " + score;
+
+            let options = shuffleArray([...word.options]);
+            let html = "";
+            options.forEach(opt => {
+                html += `<button class="btn" onclick="checkAnswer('${opt}')">${opt}</button>`;
+            });
+            document.getElementById("buttons").innerHTML = html;
+            updateProgress();
+        }
+
+        function checkAnswer(answer) {
+            if (answered) return;
+            answered = true;
+            const wordData = shuffledWords[current];
+            const buttons = document.querySelectorAll(".btn");
+
+            buttons.forEach(btn => {
+                btn.disabled = true;
+                if (btn.innerText.trim() === wordData.correct) btn.classList.add("correct");
+                if (btn.innerText.trim() === answer && answer !== wordData.correct) btn.classList.add("wrong");
+            });
+
+            document.getElementById("word").innerHTML = wordData.correct;
+            document.getElementById("pronunciation").innerHTML = wordData.pronunciation;
+            document.getElementById("meaning").innerHTML = wordData.meaning;
+            document.getElementById("example").innerHTML = wordData.example;
+
+            if (answer === wordData.correct) {
+                score++;
+                document.getElementById("message").innerHTML = "🎉 Tuyệt vời bé ơi!";
+                correctAudio.currentTime = 0;
+                correctAudio.play();
+                setTimeout(speakWord, 800);
+            } else {
+                document.getElementById("message").innerHTML = "💎 Cố gắng lần sau nhé!";
+                wrongAudio.currentTime = 0;
+                wrongAudio.play();
+            }
+            document.getElementById("score").innerHTML = "⭐ Điểm: " + score;
+        }
+
+        function nextQuestion() {
+            if (!answered) return alert("Bé hãy chọn đáp án trước nhé!");
+            current++;
+            if (current < shuffledWords.length) loadGame();
+            else {
+                alert(`Chúc mừng bé! Điểm của bé là: ${score}/${shuffledWords.length}`);
+                initGame();
+            }
+        }
+
+        function speakWord() {
+            let text = shuffledWords[current].correct;
+            let speech = new SpeechSynthesisUtterance(text);
+            speech.lang = "en-US";
+            speech.rate = 0.8;
+            window.speechSynthesis.speak(speech);
+        }
+
+        function updateProgress() {
+            let percent = ((current + 1) / shuffledWords.length) * 100;
+            document.getElementById("progressBar").style.width = percent + "%";
+        }
+
+        function restartGame() {
+            if (confirm("Chơi lại từ đầu nhé?")) initGame();
+        }
+
+        function goHome() { window.location.href = "index.html"; }
+
+        // Bắt đầu game
+        initGame();
+    </script>
+</body>
+
+</html>
