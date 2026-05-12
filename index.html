@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🌟 Bé Học Tiếng Anh</title>
+    <title>🌟 Bé Học Tiếng Anh & Toán</title>
 
     <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;700&family=Bubblegum+Sans&display=swap"
         rel="stylesheet">
@@ -54,7 +54,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: 15px; /* Giảm padding lề ngoài trên mobile */
+            padding: 15px;
         }
 
         .container {
@@ -65,7 +65,7 @@
             border: 6px solid #ffafbd;
             box-shadow: 0 12px 0 #fb6f92;
             width: 100%;
-            max-width: 900px;
+            max-width: 1000px; /* Tăng chiều rộng một chút để chứa 3 ô */
             position: relative;
             z-index: 1;
         }
@@ -73,13 +73,13 @@
         h1 img {
             max-width: 100%;
             height: auto;
-            max-height: 200px; /* Thu nhỏ chiều cao ảnh tiêu đề */
+            max-height: 180px;
             object-fit: contain;
             margin-bottom: 10px;
         }
 
         .subtitle {
-            font-size: clamp(16px, 4vw, 22px); /* Tự động co giãn font chữ */
+            font-size: clamp(16px, 4vw, 22px);
             color: #4361ee;
             margin-bottom: 30px;
             font-weight: bold;
@@ -89,16 +89,21 @@
         /* --- HỆ THỐNG GRID TỰ THÍCH ỨNG --- */
         .games {
             display: grid;
-            /* Trên điện thoại: 1 cột (1fr), Trên máy tính: 2 cột (1fr 1fr) */
-            grid-template-columns: 1fr; 
+            grid-template-columns: 1fr;
             gap: 20px;
         }
 
-        /* Khi màn hình lớn hơn 768px thì hiện 2 cột */
-        @media(min-width: 768px) {
+        /* Mobile lớn hơn 600px hiện 2 cột, PC lớn hơn 900px hiện 3 cột */
+        @media(min-width: 600px) {
             .games {
                 grid-template-columns: 1fr 1fr;
-                gap: 30px;
+            }
+        }
+
+        @media(min-width: 900px) {
+            .games {
+                grid-template-columns: 1fr 1fr 1fr;
+                gap: 25px;
             }
         }
 
@@ -112,30 +117,34 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
+            justify-content: space-between; /* Giữ các nút luôn thẳng hàng */
+            height: 100%;
         }
 
+        /* Màu viền riêng cho từng ô */
         .game-card:nth-child(1) { border-color: #ffcfd2; }
         .game-card:nth-child(2) { border-color: #cfdbff; }
+        .game-card:nth-child(3) { border-color: #b9fbc0; }
 
         .game-card:hover {
-            transform: translateY(-5px);
+            transform: translateY(-8px);
             box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
         }
 
         .game-icon {
-            font-size: clamp(50px, 10vw, 80px);
+            font-size: clamp(50px, 10vw, 70px);
             margin-bottom: 10px;
         }
 
         .game-title {
-            font-size: clamp(20px, 5vw, 28px);
+            font-size: clamp(18px, 4vw, 24px);
             color: #ff477e;
             margin-bottom: 8px;
+            font-weight: bold;
         }
 
         .game-desc {
-            font-size: clamp(14px, 3.5vw, 17px);
+            font-size: clamp(14px, 3.5vw, 16px);
             color: #666;
             line-height: 1.4;
             margin-bottom: 20px;
@@ -147,14 +156,14 @@
             text-decoration: none;
             background: #4cc9f0;
             color: white;
-            padding: 12px 30px;
+            padding: 10px 25px;
             border-radius: 50px;
-            font-size: 18px;
+            font-size: 16px;
             font-weight: bold;
             box-shadow: 0 6px 0 #4361ee;
             transition: 0.1s;
             text-transform: uppercase;
-            width: fit-content;
+            width: 80%;
         }
 
         .play-btn:active {
@@ -162,7 +171,6 @@
             box-shadow: 0 3px 0 #4361ee;
         }
 
-        /* TRANG TRÍ */
         .decoration {
             position: fixed;
             z-index: 0;
@@ -188,13 +196,13 @@
             <img src="Bé học tiếng Anh.png" alt="Bé học tiếng Anh">
         </h1>
 
-        <p class="subtitle">Khám phá thế giới từ vựng màu sắc! 🌈</p>
+        <p class="subtitle">Vừa chơi vừa học, bé giỏi mỗi ngày! 🌈</p>
 
         <div class="games">
             <!-- GAME 1 -->
             <div class="game-card" onclick="location.href='nhap.html'">
                 <span class="game-icon">🦁</span>
-                <div class="game-title"><b>Đuổi Hình Bắt Chữ</b></div>
+                <div class="game-title">Đuổi Hình Bắt Chữ</div>
                 <div class="game-desc">Nhìn Emoji xinh,<br>đoán tên cực đỉnh!</div>
                 <a href="nhap.html" class="play-btn">CHƠI LUÔN</a>
             </div>
@@ -202,9 +210,17 @@
             <!-- GAME 2 -->
             <div class="game-card" onclick="location.href='latthe.html'">
                 <span class="game-icon">🧠</span>
-                <div class="game-title"><b>Lật Thẻ Tìm Cặp</b></div>
+                <div class="game-title">Lật Thẻ Tìm Cặp</div>
                 <div class="game-desc">Rèn trí nhớ siêu phàm,<br>tìm cặp hình tương ứng!</div>
                 <a href="latthe.html" class="play-btn" style="background: #ff9f43; box-shadow: 0 6px 0 #e67e22;">CHƠI NGAY</a>
+            </div>
+
+            <!-- GAME 3: MONSTER NUMBERS -->
+            <div class="game-card" onclick="location.href='monsternumbers.html'">
+                <span class="game-icon">🔢</span>
+                <div class="game-title">Thử Thách Con Số</div>
+                <div class="game-desc">Giúp chú Thỏ nhảy xa,<br>học đếm số từ 1-100!</div>
+                <a href="so.html" class="play-btn" style="background: #2ecc71; box-shadow: 0 6px 0 #27ae60;">KHÁM PHÁ</a>
             </div>
         </div>
     </div>

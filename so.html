@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html lang="vi">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>🌟 Monster Numbers Adventure</title>
-    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;700&family=Bubblegum+Sans&display=swap" rel="stylesheet">
+    <title>🌟 Khám phá các con số</title>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;700&family=Bubblegum+Sans&display=swap"
+        rel="stylesheet">
     <style>
         :root {
             --bg-color: #a2d2ff;
@@ -13,121 +15,200 @@
         }
 
         body {
-            margin: 0; padding: 0; overflow: hidden;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
             font-family: 'Quicksand', sans-serif;
             background: var(--bg-color);
             background-image: radial-gradient(#ffffff 10%, transparent 10%), radial-gradient(#ffffff 10%, transparent 10%);
             background-size: 50px 50px;
             background-position: 0 0, 25px 25px;
-            display: flex; flex-direction: column; align-items: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
 
         .top-nav {
-            position: fixed; top: 15px; left: 15px; right: 15px;
-            display: flex; justify-content: space-between; align-items: center;
+            position: fixed;
+            top: 15px;
+            left: 15px;
+            right: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
             z-index: 1000;
         }
+
         .nav-btn {
-            width: 50px; height: 50px; border-radius: 50%;
-            border: 3px solid white; background: white;
-            cursor: pointer; font-size: 20px; display: flex;
-            justify-content: center; align-items: center;
-            box-shadow: 0 4px 0 #ddd; transition: 0.2s;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            border: 3px solid white;
+            background: white;
+            cursor: pointer;
+            font-size: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 4px 0 #ddd;
+            transition: 0.2s;
         }
 
         .ui-header {
-            width: 100%; padding: 80px 20px 0px;
-            display: flex; flex-direction: column; align-items: center; gap: 10px;
+            width: 100%;
+            padding: 80px 20px 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
             pointer-events: none;
         }
-        .stats-row { display: flex; gap: 20px; }
-        .stat-box {
-            background: white; padding: 8px 15px;
-            border-radius: 15px; border: 3px solid var(--pastel-pink);
-            box-shadow: 0 4px 0 #fb6f92;
-            color: var(--text-blue); font-weight: bold; font-size: 18px;
+
+        .stats-row {
+            display: flex;
+            gap: 20px;
         }
 
-        /* Ô HIỂN THỊ CHỮ TIẾNG ANH */
+        .stat-box {
+            background: white;
+            padding: 8px 15px;
+            border-radius: 15px;
+            border: 3px solid var(--pastel-pink);
+            box-shadow: 0 4px 0 #fb6f92;
+            color: var(--text-blue);
+            font-weight: bold;
+            font-size: 18px;
+        }
+
         .word-display {
-            background: #fff; border: 4px solid #4cc9f0;
-            padding: 10px 30px; border-radius: 20px;
-            font-size: 28px; font-weight: bold; color: #4361ee;
-            box-shadow: 0 6px 0 #4895ef; margin-bottom: 5px;
-            min-width: 200px; text-align: center;
-            text-transform: capitalize; font-family: 'Bubblegum Sans', cursive;
+            background: #fff;
+            border: 4px solid #4cc9f0;
+            padding: 10px 30px;
+            border-radius: 20px;
+            font-size: 28px;
+            font-weight: bold;
+            color: #4361ee;
+            box-shadow: 0 6px 0 #4895ef;
+            min-width: 250px;
+            text-align: center;
+            text-transform: capitalize;
+            font-family: 'Bubblegum Sans', cursive;
         }
 
         #gameCanvas {
-            display: block; width: 95%; max-width: 800px;
-            height: auto; border-radius: 30px;
-            border: 5px solid white; box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-            background: linear-gradient(to bottom, #87CEEB 0%, #E0F7FA 100%);
+            display: block;
+            width: 95%;
+            max-width: 800px;
+            height: auto;
+            border-radius: 30px;
+            border: 5px solid white;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            background-image: url('sky.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
         }
 
         .island-choices {
-            margin-top: -50px; 
-            display: flex; justify-content: space-around;
-            width: 95%; max-width: 800px;
-            padding: 0 40px; box-sizing: border-box;
+            margin-top: -50px;
+            display: flex;
+            justify-content: space-around;
+            width: 95%;
+            max-width: 800px;
+            padding: 0 40px;
+            box-sizing: border-box;
         }
+
         .choice-btn {
             font-family: 'Bubblegum Sans', cursive;
-            width: 110px; height: 70px; font-size: 32px; cursor: pointer;
-            border: none; border-radius: 15px;
-            background: rgba(255, 255, 255, 0.9); color: #2d3436;
-            box-shadow: 0 5px 0 rgba(0,0,0,0.2);
-            transition: 0.1s; z-index: 10;
+            width: 110px;
+            height: 75px;
+            font-size: 32px;
+            cursor: pointer;
+            border: none;
+            border-radius: 15px;
+            background: rgba(255, 255, 255, 0.9);
+            color: #2d3436;
+            box-shadow: 0 5px 0 rgba(0, 0, 0, 0.2);
+            transition: 0.1s;
+            z-index: 10;
+        }
+
+        .choice-btn:active {
+            transform: translateY(3px);
+            box-shadow: 0 2px 0 rgba(0, 0, 0, 0.2);
         }
 
         .overlay-screen {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
             background: rgba(162, 210, 255, 0.95);
-            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
             z-index: 2000;
+            text-align: center;
+            padding: 20px;
         }
+
         .play-now-btn {
-            background: #4cc9f0; color: white; padding: 15px 40px;
-            font-size: 24px; border-radius: 50px; border: none;
-            box-shadow: 0 6px 0 #4361ee; cursor: pointer; font-weight: bold;
+            background: #4cc9f0;
+            color: white;
+            padding: 15px 40px;
+            font-size: 24px;
+            border-radius: 50px;
+            border: none;
+            box-shadow: 0 6px 0 #4361ee;
+            cursor: pointer;
+            font-weight: bold;
+            margin-top: 20px;
         }
-        
-        #gameOverScreen { display: none; background: rgba(255, 107, 107, 0.95); }
     </style>
 </head>
+
 <body>
 
+    <!-- Tìm đến dòng này trong code của bạn và thay đổi như sau -->
     <div class="top-nav">
-        <button class="nav-btn home" onclick="location.href='index.html'">🏠</button>
+        <!-- Thay đổi location.reload() thành 'index.html' -->
+        <button class="nav-btn" onclick="window.location.href='index.html'">🏠</button>
+
         <div style="display: flex; gap: 10px;">
-            <button class="nav-btn" onclick="resetGame()">🔄</button>
-            <button id="musicToggle" class="nav-btn music" onclick="toggleMusic()">🔊</button>
+            <button id="musicToggle" class="nav-btn" onclick="toggleMusic()">🔊</button>
         </div>
     </div>
 
     <div id="startScreen" class="overlay-screen">
-        <h1 style="color: white; text-shadow: 3px 3px 0px #4361ee; font-size: 45px;">MONSTER NUMBERS</h1>
-        <button class="play-now-btn" onclick="initGame()">BẮT ĐẦU CHƠI 🚀</button>
+        <h1 style="color: white; text-shadow: 3px 3px 0px #4361ee; font-size: 45px; margin: 0;">RABBIT NUMBER</h1>
+        <p style="color: #4361ee; font-weight: bold;">Học đếm từ 1 đến 100</p>
+        <button class="play-now-btn" onclick="initGame()">BẮT ĐẦU 🚀</button>
     </div>
 
-    <div id="gameOverScreen" class="overlay-screen">
-        <h1 style="color: white; font-size: 50px;">GAME OVER! 😱</h1>
+    <div id="gameOverScreen" class="overlay-screen" style="display: none; background: rgba(255, 107, 107, 0.95);">
+        <h1 style="color: white; font-size: 50px;">GAME OVER! 😕</h1>
         <p id="finalScore" style="color: white; font-size: 24px;"></p>
-        <button class="play-now-btn" onclick="resetGame()" style="background: #ffdea0; color: #d35400; box-shadow: 0 6px 0 #e67e22;">CHƠI LẠI 🔄</button>
+        <button class="play-now-btn" onclick="resetGame()"
+            style="background: #ffdea0; color: #d35400; box-shadow: 0 6px 0 #e67e22;">THỬ LẠI 🔄</button>
     </div>
 
     <div class="ui-header">
         <div class="stats-row">
-            <div class="stat-box" id="levelDisplay">Level: 1</div>
             <div class="stat-box" id="scoreDisplay">Score: 0</div>
+            <div class="stat-box" id="levelDisplay">Level: 1</div>
         </div>
-        <div class="word-display" id="wordDisplay">...</div>
+        <div class="word-display" id="wordDisplay">READY?</div>
     </div>
 
     <canvas id="gameCanvas"></canvas>
     <div class="island-choices" id="choicesBox"></div>
 
-    <audio id="bgMusic" loop><source src="audio/nhac1.mp3" type="audio/mpeg"></audio>
+    <audio id="bgMusic" loop>
+        <source src="audio/nhac1.mp3" type="audio/mpeg">
+    </audio>
 
     <script>
         const canvas = document.getElementById('gameCanvas');
@@ -139,32 +220,37 @@
 
         const monster = {
             x: 150, y: 250, vy: 0, gravity: 0.8, jumpForce: -16,
-            targetX: 150, emoji: "👹", isFalling: false
+            targetX: 150, emoji: "🐰", isFalling: false
         };
 
         let islands = [];
 
+        // HỆ THỐNG ÂM THANH
+        const sounds = {
+            jump: new Audio('audio/jump.mp3'),
+            correct: new Audio('audio/duolingo-correct.mp3'),
+            wrong: new Audio('audio/lose.mp3'),
+            bg: document.getElementById('bgMusic')
+        };
+
         function numberToWords(n) {
-            const a = ['','one ','two ','three ','four ','five ','six ','seven ','eight ','nine ','ten ','eleven ','twelve ','thirteen ','fourteen ','fifteen ','sixteen ','seventeen ','eighteen ','nineteen '];
+            if (n === 100) return "one hundred";
+            const a = ['', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten', 'eleven', 'twelve', 'thirteen', 'fourteen', 'fifteen', 'sixteen', 'seventeen', 'eighteen', 'nineteen'];
             const b = ['', '', 'twenty', 'thirty', 'forty', 'fifty', 'sixty', 'seventy', 'eighty', 'ninety'];
+
             if (n < 20) return a[n];
-            return b[Math.floor(n / 10)] + (n % 10 !== 0 ? "-" + a[n % 10] : "");
+            const digit = n % 10;
+            if (digit === 0) return b[Math.floor(n / 10)];
+            return b[Math.floor(n / 10)] + "-" + a[digit];
         }
 
         function createIslands() {
             islands = [
-                { x: 100, y: 320, w: 140, h: 60, vy: 0, color: '#7cfc00' },
-                { x: 330, y: 320, w: 140, h: 60, vy: 0, color: '#7cfc00' },
-                { x: 560, y: 320, w: 140, h: 60, vy: 0, color: '#7cfc00' }
+                { x: 100, y: 320, w: 140, h: 60, vy: 0 },
+                { x: 330, y: 320, w: 140, h: 60, vy: 0 },
+                { x: 560, y: 320, w: 140, h: 60, vy: 0 }
             ];
         }
-
-        const sounds = {
-            jump: new Audio('https://www.soundjay.com/buttons/sounds/button-27.mp3'),
-            correct: new Audio('https://www.soundjay.com/buttons/sounds/button-3.mp3'),
-            wrong: new Audio('https://www.soundjay.com/misc/sounds/fail-trumpet-01.mp3'),
-            bg: document.getElementById('bgMusic')
-        };
 
         function drawIsland(is) {
             ctx.fillStyle = "#8B4513";
@@ -173,24 +259,26 @@
             ctx.fill();
             ctx.fillStyle = "#2ecc71";
             ctx.beginPath();
-            ctx.roundRect(is.x, is.y, is.w, is.h / 2, {tl: 20, tr: 20, bl: 5, br: 5});
+            ctx.roundRect(is.x, is.y, is.w, is.h / 2, { tl: 20, tr: 20, bl: 5, br: 5 });
             ctx.fill();
-            ctx.fillStyle = "#27ae60";
-            ctx.fillRect(is.x + 20, is.y + 5, 10, 5);
-            ctx.fillRect(is.x + 80, is.y + 8, 15, 5);
         }
 
         function toggleMusic() {
-            const btn = document.getElementById('musicToggle');
-            isMusicPlaying ? sounds.bg.pause() : sounds.bg.play().catch(()=>{});
-            btn.innerHTML = isMusicPlaying ? "🔇" : "🔊";
-            isMusicPlaying = !isMusicPlaying;
+            if (isMusicPlaying) {
+                sounds.bg.pause();
+                isMusicPlaying = false;
+            } else {
+                sounds.bg.play().catch(() => { });
+                isMusicPlaying = true;
+            }
+            document.getElementById('musicToggle').innerHTML = isMusicPlaying ? "🔊" : "🔇";
         }
 
         function speak(text) {
             window.speechSynthesis.cancel();
             const msg = new SpeechSynthesisUtterance(text);
             msg.lang = 'en-US';
+            msg.rate = 0.9;
             window.speechSynthesis.speak(msg);
         }
 
@@ -201,7 +289,12 @@
             gameActive = true;
             monster.isFalling = false;
             monster.y = 250;
-            if(!isMusicPlaying) toggleMusic();
+            monster.x = 150;
+            monster.targetX = 150;
+
+            // Tự động phát nhạc nếu trước đó chưa bật
+            if (!isMusicPlaying) toggleMusic();
+
             nextTurn();
             draw();
         }
@@ -211,22 +304,32 @@
             fallingIslandIndex = -1;
             document.getElementById('scoreDisplay').innerText = `Score: 0`;
             document.getElementById('levelDisplay').innerText = `Level: 1`;
-            monster.targetX = 150 + 20; 
+
+            // Đảm bảo nhạc nền phát lại từ đầu khi chơi lại
+            sounds.bg.currentTime = 0;
+            if (!isMusicPlaying) {
+                isMusicPlaying = true;
+                document.getElementById('musicToggle').innerHTML = "🔊";
+            }
+            sounds.bg.play().catch(() => { });
+
             initGame();
         }
 
         function nextTurn() {
-            if(!gameActive) return;
-            let max = level * 10;
-            if (max > 99) max = 99; // Giới hạn cho hàm đọc chữ đơn giản này
-            targetNum = Math.floor(Math.random() * max) + 1;
-            
+            if (!gameActive) return;
+
+            let maxNum = 20;
+            if (level === 2) maxNum = 50;
+            if (level >= 3) maxNum = 100;
+
+            targetNum = Math.floor(Math.random() * maxNum) + 1;
             document.getElementById('wordDisplay').innerText = numberToWords(targetNum);
 
             let options = [targetNum];
-            while(options.length < 3) {
-                let r = Math.floor(Math.random() * max) + 1;
-                if(!options.includes(r)) options.push(r);
+            while (options.length < 3) {
+                let r = Math.floor(Math.random() * maxNum) + 1;
+                if (!options.includes(r)) options.push(r);
             }
             options.sort(() => Math.random() - 0.5);
 
@@ -244,43 +347,47 @@
 
         function checkAnswer(selected, index) {
             if (!gameActive) return;
-            
-            // Dù đúng hay sai, quái vật luôn nhảy tới hòn đảo được chọn
+
             monster.targetX = islands[index].x + 35;
             monster.vy = monster.jumpForce;
+
+            sounds.jump.currentTime = 0;
             sounds.jump.play();
 
             if (selected === targetNum) {
                 score += 10;
                 level = Math.floor(score / 50) + 1;
+                sounds.correct.currentTime = 0;
                 sounds.correct.play();
                 document.getElementById('scoreDisplay').innerText = `Score: ${score}`;
                 document.getElementById('levelDisplay').innerText = `Level: ${level}`;
                 setTimeout(nextTurn, 1000);
             } else {
                 gameActive = false;
-                // Chờ quái vật đáp xuống đảo rồi mới cho rơi
+                // Tạm dừng nhạc nền khi thua để hiệu ứng âm thanh lose rõ ràng
+                sounds.bg.pause();
+
                 setTimeout(() => {
                     fallingIslandIndex = index;
                     monster.isFalling = true;
+
+                    sounds.wrong.currentTime = 0;
                     sounds.wrong.play();
-                    
+
                     setTimeout(() => {
                         document.getElementById('gameOverScreen').style.display = 'flex';
-                        document.getElementById('finalScore').innerText = `Bạn đã đạt được ${score} điểm!`;
+                        document.getElementById('finalScore').innerText = `Điểm của bạn: ${score}`;
                     }, 1500);
-                }, 500); // Khoảng thời gian quái vật đang ở trên không trước khi đáp
+                }, 500);
             }
         }
 
         function draw() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-            // Vẽ mây
             ctx.font = "40px Arial";
-            ctx.fillText("☁️", 100, 80); ctx.fillText("☁️", 600, 50);
+            ctx.fillText("☁️", 90, 60); ctx.fillText("☁️", 650, 80);
 
-            // Xử lý đảo rơi
             islands.forEach((is, index) => {
                 if (index === fallingIslandIndex) {
                     is.vy += 0.5;
@@ -289,7 +396,6 @@
                 drawIsland(is);
             });
 
-            // Xử lý quái vật
             monster.x += (monster.targetX - monster.x) * 0.1;
             if (monster.isFalling) {
                 monster.vy += 0.8;
@@ -297,10 +403,9 @@
             } else {
                 monster.vy += monster.gravity;
                 monster.y += monster.vy;
-                // Nếu đảo của quái vật đang đứng chưa bị rơi thì nó đứng yên trên đó
-                if (monster.y > 250 && fallingIslandIndex === -1) { 
-                    monster.y = 250; 
-                    monster.vy = 0; 
+                if (monster.y > 250 && fallingIslandIndex === -1) {
+                    monster.y = 250;
+                    monster.vy = 0;
                 }
             }
 
@@ -313,4 +418,5 @@
         }
     </script>
 </body>
+
 </html>
