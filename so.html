@@ -103,10 +103,10 @@
             border-radius: 30px;
             border: 5px solid white;
             box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            background: #87CEEB; /* Dự phòng nếu không có ảnh sky.png */
             background-image: url('sky.png');
             background-size: cover;
             background-position: center;
-            background-repeat: no-repeat;
         }
 
         .island-choices {
@@ -172,11 +172,8 @@
 
 <body>
 
-    <!-- Tìm đến dòng này trong code của bạn và thay đổi như sau -->
     <div class="top-nav">
-        <!-- Thay đổi location.reload() thành 'index.html' -->
         <button class="nav-btn" onclick="window.location.href='index.html'">🏠</button>
-
         <div style="display: flex; gap: 10px;">
             <button id="musicToggle" class="nav-btn" onclick="toggleMusic()">🔊</button>
         </div>
@@ -215,8 +212,10 @@
         const ctx = canvas.getContext('2d');
         canvas.width = 800; canvas.height = 450;
 
+        // BIẾN QUẢN LÝ TRẠNG THÁI
         let score = 0, level = 1, targetNum = 0, gameActive = false, isMusicPlaying = false;
         let fallingIslandIndex = -1;
+        let canClick = true; // KHÓA BẤM NÚT KHI ĐANG NHẢY
 
         const monster = {
             x: 150, y: 250, vy: 0, gravity: 0.8, jumpForce: -16,
@@ -225,7 +224,6 @@
 
         let islands = [];
 
-        // HỆ THỐNG ÂM THANH
         const sounds = {
             jump: new Audio('audio/jump.mp3'),
             correct: new Audio('duolingo-correct.mp3'),
@@ -237,7 +235,6 @@
             if (n === 100) return "one hundred";
             const a = ['', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten', 'eleven', 'twelve', 'thirteen', 'fourteen', 'fifteen', 'sixteen', 'seventeen', 'eighteen', 'nineteen'];
             const b = ['', '', 'twenty', 'thirty', 'forty', 'fifty', 'sixty', 'seventy', 'eighty', 'ninety'];
-
             if (n < 20) return a[n];
             const digit = n % 10;
             if (digit === 0) return b[Math.floor(n / 10)];
@@ -287,37 +284,29 @@
             document.getElementById('gameOverScreen').style.display = 'none';
             createIslands();
             gameActive = true;
+            canClick = true;
             monster.isFalling = false;
             monster.y = 250;
             monster.x = 150;
             monster.targetX = 150;
-
-            // Tự động phát nhạc nếu trước đó chưa bật
             if (!isMusicPlaying) toggleMusic();
-
             nextTurn();
-            draw();
+            requestAnimationFrame(draw);
         }
 
         function resetGame() {
             score = 0; level = 1;
             fallingIslandIndex = -1;
+            canClick = true;
             document.getElementById('scoreDisplay').innerText = `Score: 0`;
             document.getElementById('levelDisplay').innerText = `Level: 1`;
-
-            // Đảm bảo nhạc nền phát lại từ đầu khi chơi lại
             sounds.bg.currentTime = 0;
-            if (!isMusicPlaying) {
-                isMusicPlaying = true;
-                document.getElementById('musicToggle').innerHTML = "🔊";
-            }
-            sounds.bg.play().catch(() => { });
-
             initGame();
         }
 
         function nextTurn() {
             if (!gameActive) return;
+            canClick = true; // MỞ KHÓA CHO LƯỢT MỚI
 
             let maxNum = 20;
             if (level === 2) maxNum = 50;
@@ -346,7 +335,10 @@
         }
 
         function checkAnswer(selected, index) {
-            if (!gameActive) return;
+            // KIỂM TRA ĐIỀU KIỆN BẤM
+            if (!gameActive || !canClick) return;
+            
+            canClick = false; // KHÓA NGAY LẬP TỨC
 
             monster.targetX = islands[index].x + 35;
             monster.vy = monster.jumpForce;
@@ -364,16 +356,12 @@
                 setTimeout(nextTurn, 1000);
             } else {
                 gameActive = false;
-                // Tạm dừng nhạc nền khi thua để hiệu ứng âm thanh lose rõ ràng
                 sounds.bg.pause();
-
                 setTimeout(() => {
                     fallingIslandIndex = index;
                     monster.isFalling = true;
-
                     sounds.wrong.currentTime = 0;
                     sounds.wrong.play();
-
                     setTimeout(() => {
                         document.getElementById('gameOverScreen').style.display = 'flex';
                         document.getElementById('finalScore').innerText = `Điểm của bạn: ${score}`;
@@ -385,6 +373,7 @@
         function draw() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
 
+            // Vẽ mây trang trí
             ctx.font = "40px Arial";
             ctx.fillText("☁️", 90, 60); ctx.fillText("☁️", 650, 80);
 
